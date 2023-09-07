@@ -14,6 +14,18 @@ void loop(char* str)
 	}
 }
 
+
+void user_process2() 
+{
+	for (int i = 0; i < 30; i++)
+	{
+		char str[10] = "[kill2]\n\r\0";
+		call_sys_write(str);
+		user_delay(100000);
+	}
+	call_sys_kill(2,1);
+	call_sys_exit();
+}
 void user_process() 
 {
 	call_sys_write("User process\n\r");
@@ -24,10 +36,10 @@ void user_process()
 		return;
 	}
 	if (pid == 0){
-		loop("abcde");
+		user_process2();
+		//loop("abcde");
 	} else {
 		call_sys_reprior(40,5);
 		loop("12345");
 	}
 }
-

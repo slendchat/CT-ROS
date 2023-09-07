@@ -15,7 +15,8 @@ int sys_fork(){
 	return copy_process(0, 0, 0);
 }
 
-void sys_exit(){
+void sys_exit()
+{
 	exit_process();
 }
 void sys_reprior(u32 prior, u32 id)

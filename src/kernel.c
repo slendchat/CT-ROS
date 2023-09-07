@@ -38,13 +38,18 @@ void kernel_threadA()
 }
 void kernel_threadB()
 {
-	u8 data = 3;
+	// u8 data = 3;
+	// while (1)
+	// {
+    // 	i2c_send(21,&data,1);
+	// 	printf("sent %d\n\r",data);
+	// 	schedule();
+	// }
 	while (1)
-	{
-    	i2c_send(21,&data,1);
-		printf("sent %d\n\r",data);
-		schedule();
-	}
+    {
+        printf("B");
+		delay(100000);
+    }
      
 }
 void kernel_threadC()
@@ -63,9 +68,9 @@ void kernel_threadC()
 }
 void kernel_threadD()
 {
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 100; i++)
 	{
-		printf("Z");
+		printf("[%d] iterations untill process 3 will be terminated\n\r",i);
 		delay(100000);
 	}
 	printf("kill");
@@ -73,6 +78,20 @@ void kernel_threadD()
 	printf("exit");
 	exit_process();
 	
+}
+void kernel_threadE()
+{
+	reprior(20,get_id());
+	gpio_pin_enable(16);
+    gpio_pin_set_func(16,output);
+    while (1)
+    {
+        gpio_pin_set(16);
+        delay(500000);  
+        gpio_pin_clr(16);
+        delay(500000);
+    }
+     
 }
 
 void kernel_main()
@@ -131,6 +150,16 @@ void kernel_main()
 		printf("error while starting kernel process");
 		return;
 	}
+	r = copy_process(PF_KTHREAD, (unsigned long)&kernel_threadE, 0);
+	if (r < 0) {
+		printf("error while starting kernel process");
+		return;
+	}
+	r = copy_process(PF_KTHREAD, (unsigned long)&kernel_threadB, 0);
+	if (r < 0) {
+		printf("error while starting kernel process");
+		return;
+	}
 	
 	
 	while (1){
@@ -138,7 +167,7 @@ void kernel_main()
 		{
 			if (task[i]!=NULL)
 			{
-				printf("task [%d] exists\n\r",task[i]->pid);
+				printf("task [%d] exists | state[%d]\n\r",task[i]->pid,task[i]->state);
 			}
 		}
 		printf("main\n\r");

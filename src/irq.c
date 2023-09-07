@@ -6,6 +6,7 @@
 #include "peripherals/irq.h"
 #include "peripherals/aux_regs.h"
 #include "uart.h"
+#include "console.h"
 
 const char *entry_error_messages[] = {
 	"SYNC_INVALID_EL1t",
@@ -55,6 +56,12 @@ void handle_irq()
 		while ((REGS_AUX->MU_IIR_REG & 4)==4)
 		{
 			uart_echo();
+			// if (cnt < 256)
+			// {
+				// input_buf[cnt]=uart_getc();
+				// cnt++;
+			// }
+			
 		}
 	}
 

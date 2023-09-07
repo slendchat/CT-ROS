@@ -5,6 +5,7 @@ void call_sys_write(char * buf);
 int call_sys_fork();
 void call_sys_exit();
 void call_sys_reprior();
+void call_sys_kill(long pid,long sig);
 
 extern void user_delay ( unsigned long);
 extern unsigned long get_sp ( void );

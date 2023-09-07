@@ -110,11 +110,19 @@ void timer_tick()
 void reprior(u32 prior, u32 id)
 {
 	preempt_disable();
-	if (prior > 0 && prior <= 40 && task[id]!=NULL)
+	for (int i = 0; i < NR_TASKS; i++)
 	{
-		printf("\n\rreprior[id%d][pr%d]\n\r",id,prior);
-		task[id]->priority = prior;
-	}	
+		if (id == task[i]->pid)
+		{
+			if (prior > 0 && prior <= 40 && task[i]!=NULL)
+			{
+				printf("\n\rreprior[id%d][pr%d]\n\r",id,prior);
+				task[i]->priority = prior;
+			}
+			break;
+		}
+		
+	}
 	preempt_enable();
 }
 void exit_process(){
@@ -130,18 +138,7 @@ void exit_process(){
 }
 int get_id()
 {
-	preempt_disable();
-	int res = -1;
-	for (int i = 0; i < NR_TASKS; i++)
-	{
-		if (current == task[i])
-		{
-			res = i;
-			break;
-		}
-	}
-	preempt_enable();
-	return res;
+	return current->pid;
 }
 void do_signal(SIGNALS sig)
 {
@@ -156,7 +153,7 @@ void do_signal(SIGNALS sig)
 		_schedule();
 		break;
 	case SIGKILL:
-		current->state=TASK_DEL;
+		current->state=TASK_ZOMBIE;
 		_schedule();
 		break;
 	

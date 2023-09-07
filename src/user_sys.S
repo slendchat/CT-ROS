@@ -4,6 +4,7 @@
 .set SYS_FORK_NUMBER, 1 	
 .set SYS_EXIT_NUMBER, 2 	
 .set SYS_REPRIOR_NUMBER, 3
+.set SYS_KILL, 4
 
 .globl user_delay
 user_delay:
@@ -32,5 +33,11 @@ call_sys_fork:
 .global call_sys_reprior
 call_sys_reprior:
 	mov w8,#SYS_REPRIOR_NUMBER
+	svc #0
+	ret
+
+.global call_sys_kill
+call_sys_kill:
+	mov w8,#SYS_KILL
 	svc #0
 	ret
