@@ -15,6 +15,7 @@
 #include "welcome.h"
 #include "i2c.h"
 #include "sigfun.h"
+#include "reboot.h"
 
 
 void kernel_process(){
@@ -161,7 +162,7 @@ void kernel_main()
 		return;
 	}
 	
-	
+	int j = 0;
 	while (1){
 		for (int i = 0; i < NR_TASKS; i++)
 		{
@@ -170,6 +171,9 @@ void kernel_main()
 				printf("task [%d] exists | state[%d]\n\r",task[i]->pid,task[i]->state);
 			}
 		}
+		printf("%d\n\r",j);
+		if(++j==10)
+			soft_reboot();		
 		printf("main\n\r");
 		schedule();
 	}	

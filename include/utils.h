@@ -1,5 +1,4 @@
-#ifndef	_UTILS_H
-#define	_UTILS_H
+#pragma once
 
 extern void delay ( unsigned long);
 extern void write32 ( unsigned long, unsigned int );
@@ -9,4 +8,3 @@ extern void set_pgd(unsigned long pgd);
 extern unsigned long get_pgd();
 extern unsigned long get_pid();
 
-#endif  /*_UTILS_H */

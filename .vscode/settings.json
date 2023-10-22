@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "common.h": "c",
+        "gpio_regs.h": "c",
+        "base.h": "c",
+        "utils.h": "c"
+    }
+}

@@ -1,9 +1,6 @@
-#ifndef	_MM_H
-#define	_MM_H
+#pragma once
 
 #include "peripherals/base.h"
-
-#define VA_START 			0xffff000000000000
 
 #define PHYS_MEMORY_SIZE 		0x40000000	
 
@@ -47,4 +44,3 @@ extern unsigned long pg_dir;
 
 #endif
 
-#endif  /*_MM_H */
