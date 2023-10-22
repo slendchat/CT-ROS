@@ -1,4 +1,4 @@
 *.o
 *.d
 kernel8.img
-.vscode
+/.vscode
